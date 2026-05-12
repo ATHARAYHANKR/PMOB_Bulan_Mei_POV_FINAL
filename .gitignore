@@ -1,0 +1,14 @@
+# Flutter
+build/
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+*.iml
+.idea/
+android/.gradle/
+ios/Pods/
+ios/.symlinks/
+.metadata
+analysis_options.yaml
+build_output.txt
