@@ -19,6 +19,23 @@ class TrackingResult {
     required this.history,
   });
 
+  factory TrackingResult.fromJson(Map<String, dynamic> json) {
+    final history = (json['history'] as List? ?? [])
+        .map((e) => TrackingHistory.fromJson(e))
+        .toList();
+
+    return TrackingResult(
+      success: json['success'] ?? false,
+      nomorResi: json['nomor_resi'] ?? '',
+      ekspedisi: json['ekspedisi'] ?? '',
+      status: json['status'] ?? '',
+      pengirim: json['pengirim'] ?? '',
+      penerima: json['penerima'] ?? '',
+      estimasi: json['estimasi'] ?? '',
+      history: history,
+    );
+  }
+
   factory TrackingResult.fromBinderbyte(Map<String, dynamic> json) {
     final data = json['data'] ?? {};
     final summary = data['summary'] ?? {};

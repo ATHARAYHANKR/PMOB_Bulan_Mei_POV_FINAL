@@ -1,18 +1,18 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import '../models/tracking_model.dart';
 import '../models/riwayat_model.dart';
-import 'binderbyte_service.dart';
+import 'api_service.dart';
 
 enum TrackingState { idle, loading, success, error }
 
 class TrackingProvider extends ChangeNotifier {
-  final BinderbyteService _service = BinderbyteService();
-
   TrackingState _state = TrackingState.idle;
   TrackingResult? _result;
   String _errorMessage = '';
   String _selectedEkspedisi = 'jne';
+  List<RiwayatPengiriman> _riwayat = [];
 
   TrackingState get state => _state;
   TrackingResult? get result => _result;
@@ -30,14 +30,15 @@ class TrackingProvider extends ChangeNotifier {
     notifyListeners();
 
     try {
-      _result = await _service.trackPaket(
-        resi: resi,
-        ekspedisi: _selectedEkspedisi,
-      );
+      final response = await ApiService.post('/track', {
+        'resi': resi,
+        'ekspedisi': _selectedEkspedisi,
+      });
 
-      if (_result!.success) {
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        _result = TrackingResult.fromJson(data);
         _state = TrackingState.success;
-        await _simpanKeRiwayat(_result!);
       } else {
         _state = TrackingState.error;
         _errorMessage = 'Nomor resi tidak ditemukan';
@@ -50,28 +51,17 @@ class TrackingProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> _simpanKeRiwayat(TrackingResult result) async {
-    final box = Hive.box<RiwayatPengiriman>('riwayat');
-
-    // Cek apakah resi sudah ada, kalau ada update
-    final existing = box.values
-        .where((r) => r.nomorResi == result.nomorResi)
-        .toList();
-
-    if (existing.isNotEmpty) {
-      existing.first
-        ..statusTerakhir = result.status
-        ..tanggalCek = DateTime.now()
-        ..save();
-    } else {
-      await box.add(RiwayatPengiriman(
-        nomorResi: result.nomorResi,
-        ekspedisi: result.ekspedisi,
-        statusTerakhir: result.status,
-        tanggalCek: DateTime.now(),
-        pengirim: result.pengirim,
-        penerima: result.penerima,
-      ));
+  Future<void> loadRiwayat() async {
+    try {
+      final response = await ApiService.get('/history');
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body) as List;
+        _riwayat =
+            data.map((item) => RiwayatPengiriman.fromJson(item)).toList();
+        notifyListeners();
+      }
+    } catch (e) {
+      // Handle error
     }
   }
 
@@ -83,29 +73,26 @@ class TrackingProvider extends ChangeNotifier {
   }
 
   List<RiwayatPengiriman> getRiwayat() {
-    final box = Hive.box<RiwayatPengiriman>('riwayat');
-    final list = box.values.toList();
-    list.sort((a, b) => b.tanggalCek.compareTo(a.tanggalCek));
-    return list;
+    return _riwayat;
   }
 
   Future<void> hapusRiwayat(RiwayatPengiriman item) async {
-    await item.delete();
+    // For now, just remove from local list
+    _riwayat.remove(item);
     notifyListeners();
   }
 
   Future<void> hapusSemuaRiwayat() async {
-    final box = Hive.box<RiwayatPengiriman>('riwayat');
-    await box.clear();
+    _riwayat.clear();
     notifyListeners();
   }
 
   /// Initialize dummy data untuk demo (10+ items)
   Future<void> initializeDummyData() async {
     final box = Hive.box<RiwayatPengiriman>('riwayat');
-    
+
     if (box.isNotEmpty) return; // Jangan overwrite jika sudah ada data
-    
+
     final dummyData = [
       RiwayatPengiriman(
         nomorResi: 'JNE123456789',
@@ -200,7 +187,7 @@ class TrackingProvider extends ChangeNotifier {
     for (var item in dummyData) {
       await box.add(item);
     }
-    
+
     notifyListeners();
   }
 }

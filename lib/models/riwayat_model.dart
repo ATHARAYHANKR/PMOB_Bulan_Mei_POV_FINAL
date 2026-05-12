@@ -30,4 +30,16 @@ class RiwayatPengiriman extends HiveObject {
     required this.pengirim,
     required this.penerima,
   });
+
+  factory RiwayatPengiriman.fromJson(Map<String, dynamic> json) {
+    return RiwayatPengiriman(
+      nomorResi: json['nomor_resi'] ?? '',
+      ekspedisi: json['ekspedisi'] ?? '',
+      statusTerakhir: json['status_terakhir'] ?? '',
+      tanggalCek: DateTime.parse(
+          json['tanggal_cek'] ?? DateTime.now().toIso8601String()),
+      pengirim: json['pengirim'] ?? '',
+      penerima: json['penerima'] ?? '',
+    );
+  }
 }

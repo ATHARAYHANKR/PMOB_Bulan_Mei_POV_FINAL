@@ -16,6 +16,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   late TextEditingController _alamatController;
   late TextEditingController _passwordController;
   late TextEditingController _confirmPasswordController;
+  String _selectedRole = 'customer';
   bool _obscurePassword = true;
   bool _obscureConfirm = true;
   bool _isLoading = false;
@@ -51,12 +52,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
           confirmPassword: _confirmPasswordController.text.trim(),
           fullName: _namaController.text.trim(),
           phoneNumber: '',
+          role: _selectedRole,
         );
     setState(() => _isLoading = false);
     if (mounted) {
       ScaffoldMessenger.of(context).hideCurrentSnackBar();
       if (success) {
-        SnackbarHelper.showSuccess(context, 'Registrasi berhasil! Silakan login.',
+        SnackbarHelper.showSuccess(
+            context, 'Registrasi berhasil! Silakan login.',
             duration: const Duration(seconds: 2));
         Future.delayed(const Duration(milliseconds: 500), () {
           if (mounted) Navigator.pop(context);
@@ -117,8 +120,48 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     _buildField(
                       controller: _alamatController,
                       hint: 'Jl. Gunung Anyar Tambak Utara II',
-                      validator: (v) =>
-                          (v == null || v.isEmpty) ? 'Alamat wajib diisi' : null,
+                      validator: (v) => (v == null || v.isEmpty)
+                          ? 'Alamat wajib diisi'
+                          : null,
+                    ),
+                    const SizedBox(height: 16),
+                    _buildLabel('Daftar Sebagai'),
+                    const SizedBox(height: 6),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: _RoleOption(
+                            label: 'Pengguna',
+                            value: 'customer',
+                            selectedValue: _selectedRole,
+                            onChanged: (value) => setState(() {
+                              _selectedRole = value;
+                            }),
+                          ),
+                        ),
+                        const SizedBox(width: 12),
+                        Expanded(
+                          child: _RoleOption(
+                            label: 'Kurir',
+                            value: 'courier',
+                            selectedValue: _selectedRole,
+                            onChanged: (value) => setState(() {
+                              _selectedRole = value;
+                            }),
+                          ),
+                        ),
+                        const SizedBox(width: 12),
+                        Expanded(
+                          child: _RoleOption(
+                            label: 'Staff',
+                            value: 'staff',
+                            selectedValue: _selectedRole,
+                            onChanged: (value) => setState(() {
+                              _selectedRole = value;
+                            }),
+                          ),
+                        ),
+                      ],
                     ),
                     const SizedBox(height: 16),
                     _buildLabel('Password'),
@@ -127,10 +170,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       controller: _passwordController,
                       hint: '••••••••••',
                       obscure: _obscurePassword,
-                      onToggleObscure: () => setState(
-                          () => _obscurePassword = !_obscurePassword),
+                      onToggleObscure: () =>
+                          setState(() => _obscurePassword = !_obscurePassword),
                       validator: (v) {
-                        if (v == null || v.isEmpty) return 'Password wajib diisi';
+                        if (v == null || v.isEmpty)
+                          return 'Password wajib diisi';
                         if (v.length < 6) return 'Password minimal 6 karakter';
                         return null;
                       },
@@ -145,8 +189,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       onToggleObscure: () =>
                           setState(() => _obscureConfirm = !_obscureConfirm),
                       validator: (v) {
-                        if (v == null || v.isEmpty) return 'Konfirmasi wajib diisi';
-                        if (v != _passwordController.text) return 'Password tidak cocok';
+                        if (v == null || v.isEmpty)
+                          return 'Konfirmasi wajib diisi';
+                        if (v != _passwordController.text)
+                          return 'Password tidak cocok';
                         return null;
                       },
                     ),
@@ -185,24 +231,28 @@ class _RegisterScreenState extends State<RegisterScreen> {
               Row(
                 children: [
                   Expanded(
-                      child: Divider(color: Colors.grey.shade300, thickness: 1)),
+                      child:
+                          Divider(color: Colors.grey.shade300, thickness: 1)),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 12),
                     child: Text('atau daftar dengan',
-                        style:
-                            TextStyle(color: Colors.grey.shade500, fontSize: 12)),
+                        style: TextStyle(
+                            color: Colors.grey.shade500, fontSize: 12)),
                   ),
                   Expanded(
-                      child: Divider(color: Colors.grey.shade300, thickness: 1)),
+                      child:
+                          Divider(color: Colors.grey.shade300, thickness: 1)),
                 ],
               ),
               const SizedBox(height: 20),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  _SocialBtn(icon: Icons.apple, color: Colors.black, onTap: () {}),
+                  _SocialBtn(
+                      icon: Icons.apple, color: Colors.black, onTap: () {}),
                   const SizedBox(width: 16),
-                  _SocialBtn(label: 'G', color: const Color(0xFF4285F4), onTap: () {}),
+                  _SocialBtn(
+                      label: 'G', color: const Color(0xFF4285F4), onTap: () {}),
                   const SizedBox(width: 16),
                   _SocialBtn(
                       icon: Icons.facebook_rounded,
@@ -241,9 +291,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   Widget _buildLabel(String text) => Text(text,
       style: const TextStyle(
-          fontSize: 14,
-          fontWeight: FontWeight.w500,
-          color: Color(0xFF1A1A1A)));
+          fontSize: 14, fontWeight: FontWeight.w500, color: Color(0xFF1A1A1A)));
 
   Widget _buildField({
     required TextEditingController controller,
@@ -296,12 +344,63 @@ class _RegisterScreenState extends State<RegisterScreen> {
   }
 }
 
+class _RoleOption extends StatelessWidget {
+  final String label;
+  final String value;
+  final String selectedValue;
+  final ValueChanged<String> onChanged;
+
+  const _RoleOption({
+    required this.label,
+    required this.value,
+    required this.selectedValue,
+    required this.onChanged,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final selected = selectedValue == value;
+    return GestureDetector(
+      onTap: () => onChanged(value),
+      child: Container(
+        height: 48,
+        decoration: BoxDecoration(
+          color: selected ? const Color(0xFF5C3317) : Colors.white,
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(
+            color: selected ? const Color(0xFF5C3317) : Colors.grey.shade300,
+          ),
+          boxShadow: selected
+              ? [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.06),
+                    blurRadius: 8,
+                    offset: const Offset(0, 2),
+                  ),
+                ]
+              : null,
+        ),
+        child: Center(
+          child: Text(
+            label,
+            style: TextStyle(
+              color: selected ? Colors.white : Colors.black87,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 class _SocialBtn extends StatelessWidget {
   final IconData? icon;
   final String? label;
   final Color color;
   final VoidCallback onTap;
-  const _SocialBtn({this.icon, this.label, required this.color, required this.onTap});
+  const _SocialBtn(
+      {this.icon, this.label, required this.color, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -318,9 +417,7 @@ class _SocialBtn extends StatelessWidget {
           child: label != null
               ? Text(label!,
                   style: TextStyle(
-                      fontSize: 22,
-                      fontWeight: FontWeight.w700,
-                      color: color))
+                      fontSize: 22, fontWeight: FontWeight.w700, color: color))
               : Icon(icon, color: color, size: 26),
         ),
       ),

@@ -19,7 +19,7 @@ class AuthProvider extends ChangeNotifier {
   // Initialize auth service dan check login status
   Future<void> init() async {
     await _authService.init();
-    
+
     if (_authService.isLoggedIn()) {
       _currentUser = _authService.getCurrentUser();
       _state = AuthState.authenticated;
@@ -37,6 +37,7 @@ class AuthProvider extends ChangeNotifier {
     required String confirmPassword,
     required String fullName,
     required String phoneNumber,
+    String role = 'customer',
   }) async {
     _state = AuthState.loading;
     _errorMessage = '';
@@ -49,6 +50,7 @@ class AuthProvider extends ChangeNotifier {
       confirmPassword: confirmPassword,
       fullName: fullName,
       phoneNumber: phoneNumber,
+      role: role,
     );
 
     if (result['success']) {
@@ -65,7 +67,7 @@ class AuthProvider extends ChangeNotifier {
 
   // Login
   Future<bool> login({
-    required String username,
+    required String email,
     required String password,
   }) async {
     _state = AuthState.loading;
@@ -73,7 +75,7 @@ class AuthProvider extends ChangeNotifier {
     notifyListeners();
 
     final result = await _authService.login(
-      username: username,
+      email: email,
       password: password,
     );
 

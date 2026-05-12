@@ -6,19 +6,36 @@ import 'search_screen.dart';
 import 'notifikasi_screen.dart';
 import '../models/riwayat_model.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
   static const List<Map<String, dynamic>> _couriers = [
     {'name': 'JNE', 'icon': Icons.local_shipping, 'color': Color(0xFFFF6B00)},
     {'name': 'J&T', 'icon': Icons.local_shipping, 'color': Color(0xFFD32F2F)},
     {'name': 'SiCepat', 'icon': Icons.flash_on, 'color': Color(0xFFFFD700)},
-    {'name': 'AnterAja', 'icon': Icons.local_shipping, 'color': Color(0xFF0066CC)},
+    {
+      'name': 'AnterAja',
+      'icon': Icons.local_shipping,
+      'color': Color(0xFF0066CC)
+    },
     {'name': 'Pos', 'icon': Icons.mail, 'color': Color(0xFF00B050)},
     {'name': 'TIKI', 'icon': Icons.inventory_2, 'color': Color(0xFFA020F0)},
     {'name': 'Ninja', 'icon': Icons.rocket_launch, 'color': Color(0xFF00D4FF)},
     {'name': 'Lion', 'icon': Icons.flight, 'color': Color(0xFFF5A623)},
   ];
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<TrackingProvider>().loadRiwayat();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +64,7 @@ class HomeScreen extends StatelessWidget {
                     GridView.builder(
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
-                      itemCount: _couriers.length,
+                      itemCount: HomeScreen._couriers.length,
                       gridDelegate:
                           const SliverGridDelegateWithFixedCrossAxisCount(
                               crossAxisCount: 4,
@@ -55,7 +72,7 @@ class HomeScreen extends StatelessWidget {
                               crossAxisSpacing: 8,
                               childAspectRatio: 0.9),
                       itemBuilder: (context, i) {
-                        final c = _couriers[i];
+                        final c = HomeScreen._couriers[i];
                         return _CourierItem(
                             name: c['name'],
                             icon: c['icon'],
@@ -257,8 +274,7 @@ class HomeScreen extends StatelessWidget {
               height: 46,
               padding: const EdgeInsets.symmetric(horizontal: 14),
               decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(10)),
+                  color: Colors.white, borderRadius: BorderRadius.circular(10)),
               child: Row(
                 children: [
                   Icon(Icons.search_rounded,

@@ -25,6 +25,9 @@ class User extends HiveObject {
   @HiveField(6)
   DateTime createdAt;
 
+  @HiveField(7)
+  String role;
+
   User({
     required this.id,
     required this.username,
@@ -33,27 +36,32 @@ class User extends HiveObject {
     required this.fullName,
     required this.phoneNumber,
     required this.createdAt,
+    this.role = 'customer',
   });
+
+  factory User.fromJson(Map<String, dynamic> json) {
+    return User(
+      id: json['id'].toString(),
+      username: json['username'] ?? '',
+      email: json['email'] ?? '',
+      password: '', // Password tidak dikirim dari API
+      fullName: json['full_name'] ?? '',
+      phoneNumber: json['phone_number'] ?? '',
+      createdAt: DateTime.parse(
+          json['created_at'] ?? DateTime.now().toIso8601String()),
+      role: json['role'] ?? 'customer',
+    );
+  }
 
   // Convert to JSON
   Map<String, dynamic> toJson() => {
-    'id': id,
-    'username': username,
-    'email': email,
-    'password': password,
-    'fullName': fullName,
-    'phoneNumber': phoneNumber,
-    'createdAt': createdAt.toIso8601String(),
-  };
-
-  // From JSON
-  factory User.fromJson(Map<String, dynamic> json) => User(
-    id: json['id'] as String,
-    username: json['username'] as String,
-    email: json['email'] as String,
-    password: json['password'] as String,
-    fullName: json['fullName'] as String,
-    phoneNumber: json['phoneNumber'] as String,
-    createdAt: DateTime.parse(json['createdAt'] as String),
-  );
+        'id': id,
+        'username': username,
+        'email': email,
+        'password': password,
+        'fullName': fullName,
+        'phoneNumber': phoneNumber,
+        'createdAt': createdAt.toIso8601String(),
+        'role': role,
+      };
 }

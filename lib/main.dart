@@ -1,25 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider/provider.dart';
-import 'models/riwayat_model.dart';
-import 'models/user_model.dart';
 import 'services/tracking_provider.dart';
+import 'services/courier_provider.dart';
+import 'services/staff_provider.dart';
 import 'services/notification_service.dart';
 import 'services/auth_provider.dart';
 import 'screens/splash_screen.dart';
 import 'screens/main_screen.dart';
+import 'screens/courier_main_screen.dart';
+import 'screens/staff_main_screen.dart';
 import 'screens/login_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Hive.initFlutter();
-  Hive.registerAdapter(RiwayatPengirimanAdapter());
-  Hive.registerAdapter(UserAdapter());
-  await Hive.openBox<RiwayatPengiriman>('riwayat');
-  
-  // Initialize dummy data untuk demo
-  await _initializeDummyData();
-  
+
   await NotificationService.init();
   runApp(
     MultiProvider(
@@ -30,16 +24,16 @@ void main() async {
         ChangeNotifierProvider(
           create: (_) => TrackingProvider(),
         ),
+        ChangeNotifierProvider(
+          create: (_) => CourierProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => StaffProvider(),
+        ),
       ],
       child: const TracklyApp(),
     ),
   );
-}
-
-/// Initialize dummy data untuk demo (dipanggil sekali saat first launch)
-Future<void> _initializeDummyData() async {
-  final provider = TrackingProvider();
-  await provider.initializeDummyData();
 }
 
 class TracklyApp extends StatelessWidget {
@@ -61,7 +55,7 @@ class TracklyApp extends StatelessWidget {
       ),
       home: const _RootScreen(),
       routes: {
-        '/home': (_) => const MainScreen(),
+        '/home': (_) => const _RootScreen(),
         '/login': (_) => const LoginScreen(),
       },
     );
@@ -94,11 +88,17 @@ class _RootScreenState extends State<_RootScreen> {
         if (authProvider.state == AuthState.initial) {
           return const SplashScreen();
         }
-        
+
         if (authProvider.isAuthenticated) {
+          if (authProvider.currentUser?.role == 'courier') {
+            return const CourierMainScreen();
+          }
+          if (authProvider.currentUser?.role == 'staff') {
+            return const StaffMainScreen();
+          }
           return const MainScreen();
         }
-        
+
         return const LoginScreen();
       },
     );

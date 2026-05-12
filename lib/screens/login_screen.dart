@@ -36,7 +36,7 @@ class _LoginScreenState extends State<LoginScreen> {
     setState(() => _isLoading = true);
     SnackbarHelper.showLoading(context, 'Sedang memverifikasi akun...');
     final success = await context.read<AuthProvider>().login(
-          username: _emailController.text.trim(),
+          email: _emailController.text.trim(),
           password: _passwordController.text.trim(),
         );
     setState(() => _isLoading = false);
@@ -119,7 +119,8 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       ),
                       validator: (v) {
-                        if (v == null || v.isEmpty) return 'Password wajib diisi';
+                        if (v == null || v.isEmpty)
+                          return 'Password wajib diisi';
                         if (v.length < 6) return 'Password minimal 6 karakter';
                         return null;
                       },
@@ -172,24 +173,28 @@ class _LoginScreenState extends State<LoginScreen> {
               Row(
                 children: [
                   Expanded(
-                      child: Divider(color: Colors.grey.shade300, thickness: 1)),
+                      child:
+                          Divider(color: Colors.grey.shade300, thickness: 1)),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 12),
                     child: Text('atau masuk dengan',
-                        style:
-                            TextStyle(color: Colors.grey.shade500, fontSize: 12)),
+                        style: TextStyle(
+                            color: Colors.grey.shade500, fontSize: 12)),
                   ),
                   Expanded(
-                      child: Divider(color: Colors.grey.shade300, thickness: 1)),
+                      child:
+                          Divider(color: Colors.grey.shade300, thickness: 1)),
                 ],
               ),
               const SizedBox(height: 20),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  _SocialBtn(icon: Icons.apple, color: Colors.black, onTap: () {}),
+                  _SocialBtn(
+                      icon: Icons.apple, color: Colors.black, onTap: () {}),
                   const SizedBox(width: 16),
-                  _SocialBtn(label: 'G', color: const Color(0xFF4285F4), onTap: () {}),
+                  _SocialBtn(
+                      label: 'G', color: const Color(0xFF4285F4), onTap: () {}),
                   const SizedBox(width: 16),
                   _SocialBtn(
                       icon: Icons.facebook_rounded,
@@ -200,8 +205,10 @@ class _LoginScreenState extends State<LoginScreen> {
               const SizedBox(height: 32),
               Center(
                 child: GestureDetector(
-                  onTap: () => Navigator.push(context,
-                      MaterialPageRoute(builder: (_) => const RegisterScreen())),
+                  onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (_) => const RegisterScreen())),
                   child: RichText(
                     text: TextSpan(
                       text: 'Belum punya akun? ',
@@ -242,8 +249,7 @@ class _LoginScreenState extends State<LoginScreen> {
             borderSide: BorderSide(color: Colors.grey.shade300)),
         focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(8),
-            borderSide:
-                const BorderSide(color: Color(0xFF5C3317), width: 1.5)),
+            borderSide: const BorderSide(color: Color(0xFF5C3317), width: 1.5)),
         errorBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(8),
             borderSide: const BorderSide(color: Colors.red)),
@@ -258,7 +264,8 @@ class _SocialBtn extends StatelessWidget {
   final String? label;
   final Color color;
   final VoidCallback onTap;
-  const _SocialBtn({this.icon, this.label, required this.color, required this.onTap});
+  const _SocialBtn(
+      {this.icon, this.label, required this.color, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -275,9 +282,7 @@ class _SocialBtn extends StatelessWidget {
           child: label != null
               ? Text(label!,
                   style: TextStyle(
-                      fontSize: 22,
-                      fontWeight: FontWeight.w700,
-                      color: color))
+                      fontSize: 22, fontWeight: FontWeight.w700, color: color))
               : Icon(icon, color: color, size: 26),
         ),
       ),

@@ -5,8 +5,21 @@ import '../services/tracking_provider.dart';
 import '../models/riwayat_model.dart';
 import 'detail_tracking_screen.dart';
 
-class RiwayatScreen extends StatelessWidget {
+class RiwayatScreen extends StatefulWidget {
   const RiwayatScreen({super.key});
+
+  @override
+  State<RiwayatScreen> createState() => _RiwayatScreenState();
+}
+
+class _RiwayatScreenState extends State<RiwayatScreen> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<TrackingProvider>().loadRiwayat();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -75,8 +88,8 @@ class RiwayatScreen extends StatelessWidget {
     );
   }
 
-  void _lacakLagi(BuildContext context, TrackingProvider provider,
-      RiwayatPengiriman item) {
+  void _lacakLagi(
+      BuildContext context, TrackingProvider provider, RiwayatPengiriman item) {
     final kodeEkspedisi = item.ekspedisi.toLowerCase().replaceAll(' ', '');
     provider.setEkspedisi(kodeEkspedisi);
     provider.trackPaket(item.nomorResi).then((_) {
@@ -84,16 +97,14 @@ class RiwayatScreen extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (_) =>
-                DetailTrackingScreen(result: provider.result!),
+            builder: (_) => DetailTrackingScreen(result: provider.result!),
           ),
         );
       }
     });
   }
 
-  void _konfirmasiHapusSemua(
-      BuildContext context, TrackingProvider provider) {
+  void _konfirmasiHapusSemua(BuildContext context, TrackingProvider provider) {
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
@@ -110,10 +121,8 @@ class RiwayatScreen extends StatelessWidget {
               provider.hapusSemuaRiwayat();
               Navigator.pop(ctx);
             },
-            style:
-                ElevatedButton.styleFrom(backgroundColor: Colors.red),
-            child: const Text('Hapus',
-                style: TextStyle(color: Colors.white)),
+            style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
+            child: const Text('Hapus', style: TextStyle(color: Colors.white)),
           ),
         ],
       ),
@@ -144,8 +153,7 @@ class _RiwayatCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final statusColor = _statusColor(item.statusTerakhir);
-    final tanggal =
-        DateFormat('dd MMM yyyy, HH:mm').format(item.tanggalCek);
+    final tanggal = DateFormat('dd MMM yyyy, HH:mm').format(item.tanggalCek);
 
     return Container(
       margin: const EdgeInsets.only(bottom: 12),
