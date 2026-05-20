@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../utils/shared_styles.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
 import '../services/tracking_provider.dart';
@@ -121,7 +122,8 @@ class _RiwayatScreenState extends State<RiwayatScreen> {
               provider.hapusSemuaRiwayat();
               Navigator.pop(ctx);
             },
-            style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
+            style: AppStyles.primaryButtonStyle()
+                .copyWith(backgroundColor: WidgetStateProperty.all(Colors.red)),
             child: const Text('Hapus', style: TextStyle(color: Colors.white)),
           ),
         ],
@@ -162,7 +164,7 @@ class _RiwayatCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
+            color: Colors.black.withValues(alpha: 0.05),
             blurRadius: 10,
           ),
         ],
@@ -181,7 +183,7 @@ class _RiwayatCard extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(
                           horizontal: 10, vertical: 4),
                       decoration: BoxDecoration(
-                        color: const Color(0xFF5C3317).withOpacity(0.1),
+                        color: const Color(0xFF5C3317).withValues(alpha: 0.1),
                         borderRadius: BorderRadius.circular(8),
                       ),
                       child: Text(
@@ -197,7 +199,7 @@ class _RiwayatCard extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(
                           horizontal: 10, vertical: 4),
                       decoration: BoxDecoration(
-                        color: statusColor.withOpacity(0.1),
+                        color: statusColor.withValues(alpha: 0.1),
                         borderRadius: BorderRadius.circular(8),
                       ),
                       child: Text(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../utils/shared_styles.dart';
 
 class BeriRatingScreen extends StatefulWidget {
   final String nomorResi;
@@ -38,7 +39,9 @@ class _BeriRatingScreenState extends State<BeriRatingScreen> {
     });
 
     Future.delayed(const Duration(seconds: 2), () {
-      if (mounted) Navigator.pop(context);
+      if (mounted) {
+        Navigator.popUntil(context, (route) => route.isFirst);
+      }
     });
   }
 
@@ -94,7 +97,9 @@ class _BeriRatingScreenState extends State<BeriRatingScreen> {
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 6),
                   child: Icon(
-                    i < _rating ? Icons.star_rounded : Icons.star_outline_rounded,
+                    i < _rating
+                        ? Icons.star_rounded
+                        : Icons.star_outline_rounded,
                     color: i < _rating
                         ? const Color(0xFFFFC107)
                         : Colors.grey.shade300,
@@ -139,9 +144,9 @@ class _BeriRatingScreenState extends State<BeriRatingScreen> {
               maxLines: 4,
               maxLength: 500,
               decoration: InputDecoration(
-                hintText: 'Cerita pengalaman, pengiriman cepat, paket datang kondisi baik...',
-                hintStyle: TextStyle(
-                    color: Colors.grey.shade400, fontSize: 13),
+                hintText:
+                    'Cerita pengalaman, pengiriman cepat, paket datang kondisi baik...',
+                hintStyle: TextStyle(color: Colors.grey.shade400, fontSize: 13),
                 border: InputBorder.none,
                 contentPadding: const EdgeInsets.all(14),
               ),
@@ -155,12 +160,11 @@ class _BeriRatingScreenState extends State<BeriRatingScreen> {
             width: double.infinity,
             child: ElevatedButton(
               onPressed: _isLoading ? null : _kirimRating,
-              style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xFF5C3317),
-                disabledBackgroundColor: Colors.grey.shade300,
-                padding: const EdgeInsets.symmetric(vertical: 14),
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12)),
+              style: AppStyles.primaryButtonStyle().copyWith(
+                backgroundColor: WidgetStateProperty.resolveWith((states) =>
+                    states.contains(WidgetState.disabled)
+                        ? Colors.grey.shade300
+                        : const Color(0xFF5C3317)),
               ),
               child: _isLoading
                   ? const SizedBox(
@@ -193,7 +197,7 @@ class _BeriRatingScreenState extends State<BeriRatingScreen> {
               width: 80,
               height: 80,
               decoration: BoxDecoration(
-                color: const Color(0xFF5C3317).withOpacity(0.1),
+                color: const Color(0xFF5C3317).withValues(alpha: 0.1),
                 shape: BoxShape.circle,
               ),
               child: const Icon(Icons.check_circle_rounded,
@@ -206,12 +210,11 @@ class _BeriRatingScreenState extends State<BeriRatingScreen> {
                     fontWeight: FontWeight.w700,
                     color: Color(0xFF2C3E50))),
             const SizedBox(height: 10),
-            Text('Terima kasih atas masukan Anda.\nKami akan terus meningkatkan layanan.',
+            Text(
+                'Terima kasih atas masukan Anda.\nKami akan terus meningkatkan layanan.',
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                    fontSize: 14,
-                    color: Colors.grey.shade600,
-                    height: 1.5)),
+                    fontSize: 14, color: Colors.grey.shade600, height: 1.5)),
           ],
         ),
       ),
@@ -220,12 +223,18 @@ class _BeriRatingScreenState extends State<BeriRatingScreen> {
 
   String _labelRating(int r) {
     switch (r) {
-      case 1: return 'Sangat Buruk 😞';
-      case 2: return 'Buruk 😕';
-      case 3: return 'Cukup 😐';
-      case 4: return 'Baik 😊';
-      case 5: return 'Sangat Baik 🌟';
-      default: return '';
+      case 1:
+        return 'Sangat Buruk 😞';
+      case 2:
+        return 'Buruk 😕';
+      case 3:
+        return 'Cukup 😐';
+      case 4:
+        return 'Baik 😊';
+      case 5:
+        return 'Sangat Baik 🌟';
+      default:
+        return '';
     }
   }
 }

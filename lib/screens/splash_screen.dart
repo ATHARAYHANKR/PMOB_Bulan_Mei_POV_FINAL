@@ -49,7 +49,7 @@ class _SplashScreenState extends State<SplashScreen>
       if (mounted) {
         // Fade out transition sebelum navigate
         _rotationController.forward();
-        
+
         Future.delayed(const Duration(milliseconds: 300), () {
           if (mounted && context.mounted) {
             widget.onComplete?.call();
@@ -105,4 +105,3 @@ class _SplashScreenState extends State<SplashScreen>
     );
   }
 }
-

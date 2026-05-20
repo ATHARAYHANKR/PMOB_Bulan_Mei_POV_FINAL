@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../utils/shared_styles.dart';
 import '../services/binderbyte_service.dart';
 
 // ✅ Form + TextFormField + GlobalKey<FormState> (Requirement ETS)
@@ -59,8 +60,8 @@ class _TambahPaketScreenState extends State<TambahPaketScreen> {
             ),
             backgroundColor: Colors.green,
             behavior: SnackBarBehavior.floating,
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10)),
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
             duration: const Duration(seconds: 3),
           ),
         );
@@ -96,8 +97,7 @@ class _TambahPaketScreenState extends State<TambahPaketScreen> {
             TextButton.icon(
               onPressed: _resetForm,
               icon: const Icon(Icons.add, color: Colors.white),
-              label: const Text('Baru',
-                  style: TextStyle(color: Colors.white)),
+              label: const Text('Baru', style: TextStyle(color: Colors.white)),
             ),
         ],
       ),
@@ -204,8 +204,7 @@ class _TambahPaketScreenState extends State<TambahPaketScreen> {
                           .toList(),
                       onChanged: _isSimpan
                           ? null
-                          : (val) =>
-                              setState(() => _selectedEkspedisi = val!),
+                          : (val) => setState(() => _selectedEkspedisi = val!),
                       validator: (val) =>
                           val == null ? 'Pilih ekspedisi' : null,
                     ),
@@ -271,7 +270,8 @@ class _TambahPaketScreenState extends State<TambahPaketScreen> {
                     SizedBox(
                       width: double.infinity,
                       child: ElevatedButton.icon(
-                        onPressed: (_isLoading || _isSimpan) ? null : _submitForm,
+                        onPressed:
+                            (_isLoading || _isSimpan) ? null : _submitForm,
                         icon: _isLoading
                             ? const SizedBox(
                                 width: 18,
@@ -290,14 +290,12 @@ class _TambahPaketScreenState extends State<TambahPaketScreen> {
                           style: const TextStyle(
                               fontWeight: FontWeight.w700, fontSize: 15),
                         ),
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: _isSimpan
+                        style: AppStyles.primaryButtonStyle().copyWith(
+                          backgroundColor: WidgetStateProperty.all(_isSimpan
                               ? Colors.green
-                              : const Color(0xFF1E3A5F),
-                          foregroundColor: Colors.white,
-                          padding: const EdgeInsets.symmetric(vertical: 14),
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12)),
+                              : const Color(0xFF1E3A5F)),
+                          foregroundColor:
+                              WidgetStateProperty.all(Colors.white),
                         ),
                       ),
                     ),
@@ -375,8 +373,7 @@ class _TambahPaketScreenState extends State<TambahPaketScreen> {
           borderSide: const BorderSide(color: Colors.red)),
       filled: true,
       fillColor: const Color(0xFFF5F7FA),
-      contentPadding:
-          const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+      contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
     );
   }
 }

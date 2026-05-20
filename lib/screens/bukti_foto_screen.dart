@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../utils/shared_styles.dart';
 
 class BuktiFotoScreen extends StatefulWidget {
   final String nomorResi;
@@ -43,7 +44,7 @@ class _BuktiFotoScreenState extends State<BuktiFotoScreen> {
                 borderRadius: BorderRadius.circular(14),
                 boxShadow: [
                   BoxShadow(
-                      color: Colors.black.withOpacity(0.05),
+                      color: Colors.black.withValues(alpha: 0.05),
                       blurRadius: 8,
                       offset: const Offset(0, 2))
                 ],
@@ -58,7 +59,7 @@ class _BuktiFotoScreenState extends State<BuktiFotoScreen> {
                         height: 36,
                         decoration: BoxDecoration(
                             color:
-                                const Color(0xFFFF6B00).withOpacity(0.15),
+                                const Color(0xFFFF6B00).withValues(alpha: 0.15),
                             borderRadius: BorderRadius.circular(8)),
                         child: const Icon(Icons.local_shipping_rounded,
                             color: Color(0xFFFF6B00), size: 20),
@@ -73,8 +74,8 @@ class _BuktiFotoScreenState extends State<BuktiFotoScreen> {
                                   fontSize: 14,
                                   color: Color(0xFF2C3E50))),
                           Text('Diperbarui 10 menit lalu',
-                              style: TextStyle(
-                                  fontSize: 11, color: Colors.grey)),
+                              style:
+                                  TextStyle(fontSize: 11, color: Colors.grey)),
                         ],
                       ),
                     ],
@@ -133,7 +134,7 @@ class _BuktiFotoScreenState extends State<BuktiFotoScreen> {
                 borderRadius: BorderRadius.circular(14),
                 boxShadow: [
                   BoxShadow(
-                      color: Colors.black.withOpacity(0.05),
+                      color: Colors.black.withValues(alpha: 0.05),
                       blurRadius: 8,
                       offset: const Offset(0, 2))
                 ],
@@ -149,8 +150,7 @@ class _BuktiFotoScreenState extends State<BuktiFotoScreen> {
                   const SizedBox(height: 4),
                   Text(
                     'Foto ini diambil saat paket diterima di lokasi transit',
-                    style: TextStyle(
-                        fontSize: 12, color: Colors.grey.shade500),
+                    style: TextStyle(fontSize: 12, color: Colors.grey.shade500),
                   ),
                   const SizedBox(height: 12),
 
@@ -162,7 +162,7 @@ class _BuktiFotoScreenState extends State<BuktiFotoScreen> {
                       color: Colors.grey.shade100,
                       borderRadius: BorderRadius.circular(10),
                       border: Border.all(
-                          color: const Color(0xFF5C3317).withOpacity(0.4),
+                          color: const Color(0xFF5C3317).withValues(alpha: 0.4),
                           width: 2),
                     ),
                     child: Stack(
@@ -239,16 +239,12 @@ class _BuktiFotoScreenState extends State<BuktiFotoScreen> {
                     width: double.infinity,
                     child: ElevatedButton.icon(
                       onPressed: () => _unduhFoto(context),
-                      icon: const Icon(
-                          Icons.download_rounded,
-                          size: 18),
+                      icon: const Icon(Icons.download_rounded, size: 18),
                       label: const Text('Unduh Foto'),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xFF5C3317),
-                        foregroundColor: Colors.white,
-                        padding: const EdgeInsets.symmetric(vertical: 12),
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10)),
+                      style: AppStyles.primaryButtonStyle().copyWith(
+                        backgroundColor:
+                            WidgetStateProperty.all(const Color(0xFF5C3317)),
+                        foregroundColor: WidgetStateProperty.all(Colors.white),
                       ),
                     ),
                   ),
@@ -267,7 +263,7 @@ class _BuktiFotoScreenState extends State<BuktiFotoScreen> {
                   borderRadius: BorderRadius.circular(16),
                   boxShadow: [
                     BoxShadow(
-                        color: Colors.black.withOpacity(0.08),
+                        color: Colors.black.withValues(alpha: 0.08),
                         blurRadius: 12,
                         offset: const Offset(0, 4))
                   ],
@@ -278,7 +274,7 @@ class _BuktiFotoScreenState extends State<BuktiFotoScreen> {
                       width: 56,
                       height: 56,
                       decoration: BoxDecoration(
-                        color: const Color(0xFF5C3317).withOpacity(0.1),
+                        color: const Color(0xFF5C3317).withValues(alpha: 0.1),
                         shape: BoxShape.circle,
                       ),
                       child: const Icon(Icons.check_circle_rounded,

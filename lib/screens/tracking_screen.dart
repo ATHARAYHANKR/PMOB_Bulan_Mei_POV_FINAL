@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../utils/shared_styles.dart';
 import 'package:provider/provider.dart';
 import '../services/tracking_provider.dart';
 import '../services/binderbyte_service.dart';
@@ -111,7 +112,7 @@ class _TrackingScreenState extends State<TrackingScreen> {
                     borderRadius: BorderRadius.circular(16),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.black.withOpacity(0.06),
+                        color: Colors.black.withValues(alpha: 0.06),
                         blurRadius: 12,
                         offset: const Offset(0, 4),
                       ),
@@ -197,13 +198,11 @@ class _TrackingScreenState extends State<TrackingScreen> {
                                 : 'Lacak Sekarang',
                             style: const TextStyle(fontWeight: FontWeight.w600),
                           ),
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color(0xFF5C3317),
-                            foregroundColor: Colors.white,
-                            padding: const EdgeInsets.symmetric(vertical: 14),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12),
-                            ),
+                          style: AppStyles.primaryButtonStyle().copyWith(
+                            backgroundColor: WidgetStateProperty.all(
+                                const Color(0xFF5C3317)),
+                            foregroundColor:
+                                WidgetStateProperty.all(Colors.white),
                           ),
                         ),
                       ),
@@ -301,13 +300,13 @@ class _EkspedisiSelector extends StatelessWidget {
               boxShadow: [
                 if (isSelected)
                   BoxShadow(
-                    color: const Color(0xFF5C3317).withOpacity(0.2),
+                    color: const Color(0xFF5C3317).withValues(alpha: 0.2),
                     blurRadius: 12,
                     offset: const Offset(0, 4),
                   )
                 else
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.05),
+                    color: Colors.black.withValues(alpha: 0.05),
                     blurRadius: 6,
                     offset: const Offset(0, 2),
                   ),
@@ -356,9 +355,10 @@ class _TipsCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: const Color(0xFFA0673A).withOpacity(0.08),
+        color: const Color(0xFFA0673A).withValues(alpha: 0.08),
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: const Color(0xFFA0673A).withOpacity(0.3)),
+        border:
+            Border.all(color: const Color(0xFFA0673A).withValues(alpha: 0.3)),
       ),
       child: Column(
         children: tips

@@ -70,7 +70,7 @@ class _LogoIcon extends StatelessWidget {
         ),
         boxShadow: [
           BoxShadow(
-            color: primary.withOpacity(0.3),
+            color: primary.withValues(alpha: 0.3),
             blurRadius: 16,
             offset: const Offset(0, 8),
           ),
@@ -108,7 +108,7 @@ class TracklyLogoPremium extends StatelessWidget {
         color: Colors.white,
         boxShadow: [
           BoxShadow(
-            color: primaryColor.withOpacity(0.25),
+            color: primaryColor.withValues(alpha: 0.25),
             blurRadius: 24,
             offset: const Offset(0, 12),
           ),

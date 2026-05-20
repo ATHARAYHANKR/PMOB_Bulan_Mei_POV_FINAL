@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../utils/shared_styles.dart';
 import 'detail_pengiriman_screen.dart';
 import 'search_screen.dart';
 
@@ -55,8 +56,7 @@ class _PaketSayaScreenState extends State<PaketSayaScreen> {
     var list = _dummyPaket;
     if (_filterAktif != 'Semua') {
       list = list
-          .where((p) =>
-              p.status.toLowerCase() == _filterAktif.toLowerCase())
+          .where((p) => p.status.toLowerCase() == _filterAktif.toLowerCase())
           .toList();
     }
     final q = _searchController.text.trim().toLowerCase();
@@ -224,8 +224,7 @@ class _PaketSayaScreenState extends State<PaketSayaScreen> {
                                   fontSize: 15,
                                   fontWeight: FontWeight.w600)),
                           const SizedBox(height: 8),
-                          Text(
-                              'Coba gunakan kata kunci\nyang berbeda',
+                          Text('Coba gunakan kata kunci\nyang berbeda',
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                   color: Colors.grey.shade400, fontSize: 13)),
@@ -235,11 +234,9 @@ class _PaketSayaScreenState extends State<PaketSayaScreen> {
                                 context,
                                 MaterialPageRoute(
                                     builder: (_) => const SearchScreen())),
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: const Color(0xFF5C3317),
-                              foregroundColor: Colors.white,
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10)),
+                            style: AppStyles.primaryButtonStyle().copyWith(
+                              backgroundColor: WidgetStateProperty.all(
+                                  const Color(0xFF5C3317)),
                             ),
                             child: const Text('Lacak Paket Baru'),
                           ),
@@ -305,7 +302,8 @@ class _PaketSayaScreenState extends State<PaketSayaScreen> {
                                     padding: const EdgeInsets.symmetric(
                                         horizontal: 10, vertical: 4),
                                     decoration: BoxDecoration(
-                                      color: statusColor.withValues(alpha: 0.12),
+                                      color:
+                                          statusColor.withValues(alpha: 0.12),
                                       borderRadius: BorderRadius.circular(8),
                                     ),
                                     child: Text(
@@ -355,10 +353,8 @@ class _PaketSayaScreenState extends State<PaketSayaScreen> {
                                         Container(
                                             height: 1,
                                             color: Colors.grey.shade300),
-                                        const Icon(
-                                            Icons.arrow_forward_rounded,
-                                            size: 14,
-                                            color: Color(0xFF5C3317)),
+                                        const Icon(Icons.arrow_forward_rounded,
+                                            size: 14, color: Color(0xFF5C3317)),
                                       ],
                                     ),
                                   ),
@@ -383,15 +379,16 @@ class _PaketSayaScreenState extends State<PaketSayaScreen> {
                                           Icons.delete_outline_rounded,
                                           size: 16),
                                       label: const Text('Hapus'),
-                                      style: OutlinedButton.styleFrom(
-                                        foregroundColor: Colors.red,
-                                        side:
-                                            const BorderSide(color: Colors.red),
-                                        padding: const EdgeInsets.symmetric(
-                                            vertical: 8),
-                                        shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(8)),
+                                      style: AppStyles.outlinedButtonStyle()
+                                          .copyWith(
+                                        foregroundColor:
+                                            WidgetStateProperty.all(Colors.red),
+                                        side: WidgetStateProperty.all(
+                                            const BorderSide(
+                                                color: Colors.red)),
+                                        padding: WidgetStateProperty.all(
+                                            const EdgeInsets.symmetric(
+                                                vertical: 8)),
                                       ),
                                     ),
                                   ),
@@ -408,16 +405,15 @@ class _PaketSayaScreenState extends State<PaketSayaScreen> {
                                           Icons.visibility_outlined,
                                           size: 16),
                                       label: const Text('Lihat Detail'),
-                                      style: ElevatedButton.styleFrom(
+                                      style: AppStyles.primaryButtonStyle()
+                                          .copyWith(
                                         backgroundColor:
-                                            const Color(0xFF5C3317),
-                                        foregroundColor: Colors.white,
-                                        elevation: 0,
-                                        padding: const EdgeInsets.symmetric(
-                                            vertical: 8),
-                                        shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(8)),
+                                            WidgetStateProperty.all(
+                                                const Color(0xFF5C3317)),
+                                        elevation: WidgetStateProperty.all(0),
+                                        padding: WidgetStateProperty.all(
+                                            const EdgeInsets.symmetric(
+                                                vertical: 8)),
                                       ),
                                     ),
                                   ),
@@ -451,9 +447,10 @@ class _PaketSayaScreenState extends State<PaketSayaScreen> {
               setState(() => _dummyPaket.remove(paket));
               Navigator.pop(context);
             },
-            style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
-            child:
-                const Text('Hapus', style: TextStyle(color: Colors.white)),
+            style: AppStyles.primaryButtonStyle().copyWith(
+              backgroundColor: WidgetStateProperty.all(Colors.red),
+            ),
+            child: const Text('Hapus', style: TextStyle(color: Colors.white)),
           ),
         ],
       ),

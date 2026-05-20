@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../utils/shared_styles.dart';
 import 'package:provider/provider.dart';
 import '../services/auth_provider.dart';
 import 'login_screen.dart';
@@ -85,7 +86,7 @@ class InfoScreen extends StatelessWidget {
                           vertical: 8,
                         ),
                         decoration: BoxDecoration(
-                          color: Colors.white.withOpacity(0.2),
+                          color: Colors.white.withValues(alpha: 0.2),
                           borderRadius: BorderRadius.circular(20),
                         ),
                         child: const Text(
@@ -182,8 +183,9 @@ class InfoScreen extends StatelessWidget {
                                 ),
                               );
                             },
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.red,
+                            style: AppStyles.primaryButtonStyle().copyWith(
+                              backgroundColor:
+                                  WidgetStateProperty.all(Colors.red),
                             ),
                             child: const Text(
                               'Logout',
@@ -196,13 +198,11 @@ class InfoScreen extends StatelessWidget {
                   },
                   icon: const Icon(Icons.logout_rounded),
                   label: const Text('Keluar dari Akun'),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.red,
-                    foregroundColor: Colors.white,
-                    padding: const EdgeInsets.symmetric(vertical: 14),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
+                  style: AppStyles.primaryButtonStyle().copyWith(
+                    backgroundColor: WidgetStateProperty.all(Colors.red),
+                    foregroundColor: WidgetStateProperty.all(Colors.white),
+                    padding: WidgetStateProperty.all(
+                        const EdgeInsets.symmetric(vertical: 14)),
                   ),
                 ),
 
@@ -231,7 +231,7 @@ class _InfoCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.04),
+            color: Colors.black.withValues(alpha: 0.04),
             blurRadius: 8,
             offset: const Offset(0, 2),
           ),
@@ -250,9 +250,9 @@ class _InfoCard extends StatelessWidget {
           ),
           const SizedBox(height: 12),
           ...items.map((item) => Padding(
-            padding: const EdgeInsets.only(bottom: 12),
-            child: item,
-          )),
+                padding: const EdgeInsets.only(bottom: 12),
+                child: item,
+              )),
         ],
       ),
     );

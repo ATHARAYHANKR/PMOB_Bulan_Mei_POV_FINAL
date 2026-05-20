@@ -113,9 +113,32 @@ class AuthService {
         };
       }
 
+      String errorMessage = 'Email atau password salah';
+      try {
+        final body = jsonDecode(response.body);
+        if (body is Map<String, dynamic>) {
+          if (body['message'] != null) {
+            errorMessage = body['message'].toString();
+          } else if (body['errors'] != null &&
+              body['errors'] is Map<String, dynamic>) {
+            final errors = body['errors'] as Map<String, dynamic>;
+            if (errors.isNotEmpty) {
+              final firstError = errors.values.first;
+              if (firstError is List && firstError.isNotEmpty) {
+                errorMessage = firstError.first.toString();
+              } else {
+                errorMessage = firstError.toString();
+              }
+            }
+          }
+        }
+      } catch (_) {
+        // Keep default error message when body is not valid JSON
+      }
+
       return {
         'success': false,
-        'message': 'Email atau password salah',
+        'message': errorMessage,
       };
     } catch (e) {
       return {

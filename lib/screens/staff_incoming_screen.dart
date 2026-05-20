@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import '../utils/shared_styles.dart';
 import 'package:provider/provider.dart';
 import '../services/staff_provider.dart';
+import 'staff_task_detail_screen.dart';
 
 class StaffIncomingScreen extends StatefulWidget {
   const StaffIncomingScreen({super.key});
@@ -43,7 +45,17 @@ class _StaffIncomingScreenState extends State<StaffIncomingScreen> {
             separatorBuilder: (_, __) => const SizedBox(height: 12),
             itemBuilder: (context, index) {
               final shipment = shipments[index];
-              return _ShipmentTile(shipment: shipment);
+              return GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => StaffTaskDetailScreen(shipment: shipment),
+                    ),
+                  );
+                },
+                child: _ShipmentTile(shipment: shipment),
+              );
             },
           );
         },
@@ -66,7 +78,7 @@ class _ShipmentTile extends StatelessWidget {
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-              color: Colors.black.withOpacity(0.05),
+              color: Colors.black.withValues(alpha: 0.05),
               blurRadius: 10,
               offset: const Offset(0, 4)),
         ],
@@ -95,10 +107,9 @@ class _ShipmentTile extends StatelessWidget {
             children: [
               Expanded(
                 child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFF5C3317),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12)),
+                  style: AppStyles.primaryButtonStyle().copyWith(
+                    backgroundColor:
+                        WidgetStateProperty.all(const Color(0xFF5C3317)),
                   ),
                   onPressed: () {
                     context.read<StaffProvider>().receiveShipment(shipment.id);
@@ -111,10 +122,9 @@ class _ShipmentTile extends StatelessWidget {
               const SizedBox(width: 10),
               Expanded(
                 child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.orange.shade700,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12)),
+                  style: AppStyles.primaryButtonStyle().copyWith(
+                    backgroundColor:
+                        WidgetStateProperty.all(Colors.orange.shade700),
                   ),
                   onPressed: () {
                     context.read<StaffProvider>().markReadyToPack(shipment.id);

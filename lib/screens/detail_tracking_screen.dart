@@ -82,10 +82,10 @@ class DetailTrackingScreen extends StatelessWidget {
                         padding: const EdgeInsets.symmetric(
                             horizontal: 12, vertical: 4),
                         decoration: BoxDecoration(
-                          color: statusColor.withOpacity(0.2),
+                          color: statusColor.withValues(alpha: 0.2),
                           borderRadius: BorderRadius.circular(20),
-                          border:
-                              Border.all(color: statusColor.withOpacity(0.5)),
+                          border: Border.all(
+                              color: statusColor.withValues(alpha: 0.5)),
                         ),
                         child: Text(
                           result.status,
@@ -154,10 +154,10 @@ class DetailTrackingScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 12),
                   Container(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 12, vertical: 8),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                     decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.15),
+                      color: Colors.white.withValues(alpha: 0.15),
                       borderRadius: BorderRadius.circular(8),
                     ),
                     child: Row(
@@ -191,7 +191,7 @@ class DetailTrackingScreen extends StatelessWidget {
                 borderRadius: BorderRadius.circular(16),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.05),
+                    color: Colors.black.withValues(alpha: 0.05),
                     blurRadius: 10,
                   ),
                 ],

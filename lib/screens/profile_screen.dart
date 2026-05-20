@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import '../services/auth_provider.dart';
 import 'login_screen.dart';
 import 'edit_profile_screen.dart';
+import '../utils/shared_styles.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -36,13 +37,7 @@ class ProfileScreen extends StatelessWidget {
                       context,
                       MaterialPageRoute(builder: (_) => const LoginScreen()),
                     ),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFF5C3317),
-                      foregroundColor: Colors.white,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                    ),
+                    style: AppStyles.primaryButtonStyle(),
                     child: const Text('Masuk'),
                   ),
                 ],
@@ -87,7 +82,8 @@ class ProfileScreen extends StatelessWidget {
                                   ),
                                   boxShadow: [
                                     BoxShadow(
-                                      color: Colors.black.withOpacity(0.2),
+                                      color:
+                                          Colors.black.withValues(alpha: 0.2),
                                       blurRadius: 10,
                                     ),
                                   ],
@@ -249,23 +245,22 @@ class ProfileScreen extends StatelessWidget {
                       // Tombol Logout
                       SizedBox(
                         width: double.infinity,
-                        child: ElevatedButton.icon(
+                        child: ElevatedButton(
                           onPressed: () =>
                               _showLogoutDialog(context, authProvider),
-                          icon: const Icon(Icons.logout_rounded),
-                          label: const Text(
+                          style: AppStyles.primaryButtonStyle().copyWith(
+                            backgroundColor:
+                                WidgetStateProperty.all(Colors.red.shade600),
+                            foregroundColor:
+                                WidgetStateProperty.all(Colors.white),
+                            padding: WidgetStateProperty.all(
+                                const EdgeInsets.symmetric(vertical: 14)),
+                          ),
+                          child: const Text(
                             'Keluar dari Akun',
                             style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.red.shade600,
-                            foregroundColor: Colors.white,
-                            padding: const EdgeInsets.symmetric(vertical: 14),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12),
                             ),
                           ),
                         ),
@@ -314,8 +309,8 @@ class ProfileScreen extends StatelessWidget {
                 MaterialPageRoute(builder: (_) => const LoginScreen()),
               );
             },
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.red,
+            style: AppStyles.primaryButtonStyle().copyWith(
+              backgroundColor: WidgetStateProperty.all(Colors.red),
             ),
             child: const Text(
               'Keluar',
@@ -340,9 +335,7 @@ class ProfileScreen extends StatelessWidget {
         actions: [
           ElevatedButton(
             onPressed: () => Navigator.pop(context),
-            style: ElevatedButton.styleFrom(
-              backgroundColor: const Color(0xFF5C3317),
-            ),
+            style: AppStyles.primaryButtonStyle(),
             child: const Text('OK', style: TextStyle(color: Colors.white)),
           ),
         ],
@@ -359,7 +352,7 @@ class _VerifiedBadge extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
       decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.2),
+        color: Colors.white.withValues(alpha: 0.2),
         borderRadius: BorderRadius.circular(20),
         border: Border.all(color: Colors.white38),
       ),
@@ -397,7 +390,7 @@ class _SectionCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
+            color: Colors.black.withValues(alpha: 0.05),
             blurRadius: 8,
             offset: const Offset(0, 2),
           ),

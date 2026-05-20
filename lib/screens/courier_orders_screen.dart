@@ -28,6 +28,8 @@ class _CourierOrdersScreenState extends State<CourierOrdersScreen> {
         title: const Text('List Order',
             style: TextStyle(fontWeight: FontWeight.w700)),
         backgroundColor: Colors.white,
+        foregroundColor: const Color(0xFF2C3E50),
+        iconTheme: const IconThemeData(color: Color(0xFF2C3E50)),
         elevation: 0,
       ),
       body: Consumer<CourierProvider>(
@@ -75,7 +77,7 @@ class _OrderTile extends StatelessWidget {
           borderRadius: BorderRadius.circular(16),
           boxShadow: [
             BoxShadow(
-                color: Colors.black.withOpacity(0.05),
+                color: Colors.black.withValues(alpha: 0.05),
                 blurRadius: 10,
                 offset: const Offset(0, 4)),
           ],
@@ -104,7 +106,7 @@ class _OrderTile extends StatelessWidget {
                   padding:
                       const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                   decoration: BoxDecoration(
-                    color: const Color(0xFF5C3317).withOpacity(0.1),
+                    color: const Color(0xFF5C3317).withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Text(order.status,

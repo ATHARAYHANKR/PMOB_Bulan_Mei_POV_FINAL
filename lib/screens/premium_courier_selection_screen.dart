@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../utils/shared_styles.dart';
 import '../widgets/courier_card.dart'; // ✅ INI DIPAKAI
 
 class PremiumCourierSelectionScreen extends StatefulWidget {
@@ -37,7 +38,6 @@ class _PremiumCourierSelectionScreenState
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFFFAF8F5),
-
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.transparent,
@@ -51,7 +51,6 @@ class _PremiumCourierSelectionScreenState
         ),
         iconTheme: const IconThemeData(color: Color(0xFF5C3317)),
       ),
-
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
@@ -74,8 +73,7 @@ class _PremiumCourierSelectionScreenState
             Expanded(
               child: GridView.builder(
                 itemCount: couriers.length,
-                gridDelegate:
-                    const SliverGridDelegateWithFixedCrossAxisCount(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 4,
                   mainAxisSpacing: 16,
                   crossAxisSpacing: 12,
@@ -100,11 +98,9 @@ class _PremiumCourierSelectionScreenState
               width: double.infinity,
               height: 52,
               child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF5C3317),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(14),
-                  ),
+                style: AppStyles.primaryButtonStyle().copyWith(
+                  backgroundColor:
+                      WidgetStateProperty.all(const Color(0xFF5C3317)),
                 ),
                 onPressed: () {},
                 child: Text(

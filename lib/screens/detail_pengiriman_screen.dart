@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+import '../utils/shared_styles.dart';
+import 'package:provider/provider.dart';
+import '../services/auth_provider.dart';
+import 'register_screen.dart';
 import 'paket_saya_screen.dart';
 import 'bukti_foto_screen.dart';
+import 'beri_rating_screen.dart';
 
 class DetailPengirimanScreen extends StatelessWidget {
   final PaketTersimpan paket;
@@ -123,6 +128,7 @@ class DetailPengirimanScreen extends StatelessWidget {
             const SizedBox(height: 16),
             _buildRiwayatPerjalanan(context),
             const SizedBox(height: 24),
+            _buildActionSection(context),
           ],
         ),
       ),
@@ -210,6 +216,99 @@ class DetailPengirimanScreen extends StatelessWidget {
                   style: TextStyle(fontSize: 12, color: Colors.grey.shade600)),
             ],
           ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildActionSection(BuildContext context) {
+    final authProvider = context.watch<AuthProvider>();
+    final isAuthenticated = authProvider.isAuthenticated;
+
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(16),
+        boxShadow: [
+          BoxShadow(
+              color: Colors.black.withValues(alpha: 0.05),
+              blurRadius: 10,
+              offset: const Offset(0, 2))
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          const Text('Aksi Pengiriman',
+              style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w700,
+                  color: Color(0xFF2C3E50))),
+          const SizedBox(height: 10),
+          if (isAuthenticated) ...[
+            const Text(
+                'Terima kasih sudah login. Anda dapat memberi rating untuk layanan ini.',
+                style: TextStyle(fontSize: 12, color: Colors.grey)),
+            const SizedBox(height: 14),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) =>
+                        BeriRatingScreen(nomorResi: paket.nomorResi),
+                  ),
+                );
+              },
+              style: AppStyles.primaryButtonStyle().copyWith(
+                backgroundColor:
+                    WidgetStateProperty.all(const Color(0xFF5C3317)),
+                padding: WidgetStateProperty.all(
+                    const EdgeInsets.symmetric(vertical: 16)),
+              ),
+              child: const Text('Beri Rating',
+                  style: TextStyle(fontWeight: FontWeight.w700)),
+            ),
+          ] else ...[
+            const Text(
+                'Masuk atau daftar untuk memberi rating dan melihat status paket penuh.',
+                style: TextStyle(fontSize: 12, color: Colors.grey)),
+            const SizedBox(height: 14),
+            Row(
+              children: [
+                Expanded(
+                  child: OutlinedButton(
+                    onPressed: () => Navigator.pushNamed(context, '/login'),
+                    style: AppStyles.outlinedButtonStyle().copyWith(
+                      padding: WidgetStateProperty.all(
+                          const EdgeInsets.symmetric(vertical: 14)),
+                    ),
+                    child: const Text('Masuk'),
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: ElevatedButton(
+                    onPressed: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => const RegisterScreen(),
+                      ),
+                    ),
+                    style: AppStyles.primaryButtonStyle().copyWith(
+                      backgroundColor:
+                          WidgetStateProperty.all(const Color(0xFF5C3317)),
+                      padding: WidgetStateProperty.all(
+                          const EdgeInsets.symmetric(vertical: 14)),
+                    ),
+                    child: const Text('Daftar',
+                        style: TextStyle(fontWeight: FontWeight.w700)),
+                  ),
+                ),
+              ],
+            )
+          ]
         ],
       ),
     );

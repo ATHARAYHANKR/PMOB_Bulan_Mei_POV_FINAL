@@ -34,8 +34,8 @@ class BinderbyteService {
       );
 
       final response = await http.get(uri).timeout(
-        const Duration(seconds: 15),
-      );
+            const Duration(seconds: 15),
+          );
 
       if (response.statusCode == 200) {
         final json = jsonDecode(response.body);

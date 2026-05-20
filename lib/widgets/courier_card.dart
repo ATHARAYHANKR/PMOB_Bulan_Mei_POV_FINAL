@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../utils/shared_styles.dart';
 
 class CourierCard extends StatefulWidget {
   final String name;
@@ -65,43 +66,25 @@ class _CourierCardState extends State<CourierCard>
       scale: _scale,
       child: Material(
         color: Colors.transparent,
-        borderRadius: BorderRadius.circular(18),
+        borderRadius: BorderRadius.circular(AppStyles.cardRadius),
         child: InkWell(
-          borderRadius: BorderRadius.circular(18),
+          borderRadius: BorderRadius.circular(AppStyles.cardRadius),
           onTap: widget.onTap,
           onTapDown: _tapDown,
           onTapUp: _tapUp,
           onTapCancel: _tapCancel,
-          splashColor: const Color(0xFF5C3317).withOpacity(0.2),
+          splashColor: AppStyles.primaryColor.withValues(alpha: 0.2),
           highlightColor: Colors.transparent,
           child: AnimatedContainer(
             duration: const Duration(milliseconds: 250),
-            decoration: BoxDecoration(
-              color: const Color(0xFFF5E6D8),
-              borderRadius: BorderRadius.circular(18),
+            decoration: AppStyles.cardDecoration(color: const Color(0xFFF5E6D8))
+                .copyWith(
               border: active
                   ? Border.all(
-                      color: const Color(0xFF5C3317),
+                      color: AppStyles.primaryColor,
                       width: 2,
                     )
                   : null,
-              boxShadow: [
-                // Glow / shadow utama
-                BoxShadow(
-                  color: active
-                      ? const Color(0xFF5C3317).withOpacity(0.25)
-                      : Colors.black.withOpacity(0.08),
-                  blurRadius: active ? 18 : 10,
-                  offset: const Offset(0, 5),
-                ),
-
-                // Light neumorphism
-                BoxShadow(
-                  color: Colors.white.withOpacity(0.6),
-                  blurRadius: 8,
-                  offset: const Offset(0, -2),
-                ),
-              ],
             ),
             child: Stack(
               children: [
@@ -118,7 +101,7 @@ class _CourierCardState extends State<CourierCard>
                         shape: BoxShape.circle,
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.black.withOpacity(0.06),
+                            color: Colors.black.withValues(alpha: 0.06),
                             blurRadius: 8,
                             offset: const Offset(0, 2),
                           ),
@@ -144,9 +127,8 @@ class _CourierCardState extends State<CourierCard>
                         style: TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.w600,
-                          color: active
-                              ? const Color(0xFF5C3317)
-                              : Colors.black87,
+                          color:
+                              active ? const Color(0xFF5C3317) : Colors.black87,
                         ),
                       ),
                     ),
@@ -166,7 +148,8 @@ class _CourierCardState extends State<CourierCard>
                         shape: BoxShape.circle,
                         boxShadow: [
                           BoxShadow(
-                            color: const Color(0xFFE74C3C).withOpacity(0.4),
+                            color:
+                                const Color(0xFFE74C3C).withValues(alpha: 0.4),
                             blurRadius: 8,
                           ),
                         ],

@@ -40,6 +40,9 @@ class User extends HiveObject {
   });
 
   factory User.fromJson(Map<String, dynamic> json) {
+    final roleValue =
+        json['role']?.toString().trim().toLowerCase() ?? 'customer';
+
     return User(
       id: json['id'].toString(),
       username: json['username'] ?? '',
@@ -49,7 +52,7 @@ class User extends HiveObject {
       phoneNumber: json['phone_number'] ?? '',
       createdAt: DateTime.parse(
           json['created_at'] ?? DateTime.now().toIso8601String()),
-      role: json['role'] ?? 'customer',
+      role: roleValue,
     );
   }
 
@@ -59,9 +62,9 @@ class User extends HiveObject {
         'username': username,
         'email': email,
         'password': password,
-        'fullName': fullName,
-        'phoneNumber': phoneNumber,
-        'createdAt': createdAt.toIso8601String(),
+        'full_name': fullName,
+        'phone_number': phoneNumber,
+        'created_at': createdAt.toIso8601String(),
         'role': role,
       };
 }

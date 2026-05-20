@@ -26,6 +26,8 @@ class _CourierHistoryScreenState extends State<CourierHistoryScreen> {
         title: const Text('Riwayat Pengiriman',
             style: TextStyle(fontWeight: FontWeight.w700)),
         backgroundColor: Colors.white,
+        foregroundColor: const Color(0xFF2C3E50),
+        iconTheme: const IconThemeData(color: Color(0xFF2C3E50)),
         elevation: 0,
       ),
       body: Consumer<CourierProvider>(
@@ -50,7 +52,7 @@ class _CourierHistoryScreenState extends State<CourierHistoryScreen> {
                   borderRadius: BorderRadius.circular(16),
                   boxShadow: [
                     BoxShadow(
-                        color: Colors.black.withOpacity(0.05),
+                        color: Colors.black.withValues(alpha: 0.05),
                         blurRadius: 10,
                         offset: const Offset(0, 4)),
                   ],

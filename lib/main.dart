@@ -90,10 +90,12 @@ class _RootScreenState extends State<_RootScreen> {
         }
 
         if (authProvider.isAuthenticated) {
-          if (authProvider.currentUser?.role == 'courier') {
+          final role =
+              authProvider.currentUser?.role.toLowerCase().trim() ?? '';
+          if (role.contains('courier')) {
             return const CourierMainScreen();
           }
-          if (authProvider.currentUser?.role == 'staff') {
+          if (role.contains('staff')) {
             return const StaffMainScreen();
           }
           return const MainScreen();

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../utils/shared_styles.dart';
 import 'package:provider/provider.dart';
 import '../services/auth_provider.dart';
 import '../utils/snackbar_helper.dart';
@@ -38,9 +39,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     SnackbarHelper.showLoading(context, 'Menyimpan perubahan...');
 
     final success = await context.read<AuthProvider>().updateProfile(
-      fullName: _fullNameController.text.trim(),
-      phoneNumber: _phoneController.text.trim(),
-    );
+          fullName: _fullNameController.text.trim(),
+          phoneNumber: _phoneController.text.trim(),
+        );
 
     setState(() => _isLoading = false);
 
@@ -92,10 +93,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     width: 100,
                     height: 100,
                     decoration: BoxDecoration(
-                      color: const Color(0xFF5C3317).withOpacity(0.1),
+                      color: const Color(0xFF5C3317).withValues(alpha: 0.1),
                       shape: BoxShape.circle,
                       border: Border.all(
-                        color: const Color(0xFF5C3317).withOpacity(0.3),
+                        color: const Color(0xFF5C3317).withValues(alpha: 0.3),
                         width: 2,
                       ),
                     ),
@@ -141,7 +142,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 borderRadius: BorderRadius.circular(16),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.05),
+                    color: Colors.black.withValues(alpha: 0.05),
                     blurRadius: 8,
                     offset: const Offset(0, 2),
                   ),
@@ -224,13 +225,11 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               width: double.infinity,
               child: ElevatedButton(
                 onPressed: _isLoading ? null : _handleSave,
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF5C3317),
-                  disabledBackgroundColor: Colors.grey.shade300,
-                  padding: const EdgeInsets.symmetric(vertical: 15),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
+                style: AppStyles.primaryButtonStyle().copyWith(
+                  backgroundColor: WidgetStateProperty.resolveWith((states) =>
+                      states.contains(WidgetState.disabled)
+                          ? Colors.grey.shade300
+                          : const Color(0xFF5C3317)),
                 ),
                 child: _isLoading
                     ? const SizedBox(
@@ -260,12 +259,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               width: double.infinity,
               child: OutlinedButton(
                 onPressed: () => Navigator.pop(context),
-                style: OutlinedButton.styleFrom(
-                  side: const BorderSide(color: Color(0xFF5C3317)),
-                  padding: const EdgeInsets.symmetric(vertical: 14),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
+                style: AppStyles.outlinedButtonStyle().copyWith(
+                  padding: WidgetStateProperty.all(
+                      const EdgeInsets.symmetric(vertical: 14)),
                 ),
                 child: const Text(
                   'Batal',

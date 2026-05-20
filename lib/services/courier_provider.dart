@@ -54,10 +54,33 @@ class CourierProvider extends ChangeNotifier {
   }
 
   Future<void> markPicked(String id) async {
-    await updateStatus(id, 'Dalam pengiriman');
+    try {
+      await updateStatus(id, 'Pickup Aktif');
+    } catch (_) {}
     final order = _activeOrders.firstWhere((o) => o.id == id,
         orElse: () => throw Exception('Order tidak ditemukan'));
     order.isPicked = true;
+    order.status = 'Pickup Aktif';
+    notifyListeners();
+  }
+
+  Future<void> markScanComplete(String id) async {
+    try {
+      await updateStatus(id, 'Scan Selesai');
+    } catch (_) {}
+    final order = _activeOrders.firstWhere((o) => o.id == id,
+        orElse: () => throw Exception('Order tidak ditemukan'));
+    order.isPicked = true;
+    order.status = 'Scan Selesai';
+    notifyListeners();
+  }
+
+  Future<void> startDelivery(String id) async {
+    try {
+      await updateStatus(id, 'Dalam pengiriman');
+    } catch (_) {}
+    final order = _activeOrders.firstWhere((o) => o.id == id,
+        orElse: () => throw Exception('Order tidak ditemukan'));
     order.status = 'Dalam pengiriman';
     notifyListeners();
   }

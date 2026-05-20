@@ -1,10 +1,20 @@
 import 'dart:convert';
+import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ApiService {
-  static const String baseUrl =
-      'http://10.0.2.2:8000/api'; // Change to your Laravel URL
+  static String get baseUrl {
+    if (kIsWeb) {
+      return 'http://localhost:8000/api';
+    }
+
+    if (defaultTargetPlatform == TargetPlatform.android) {
+      return 'http://10.0.2.2:8000/api';
+    }
+
+    return 'http://localhost:8000/api';
+  }
 
   static Future<Map<String, String>> _getHeaders() async {
     final prefs = await SharedPreferences.getInstance();

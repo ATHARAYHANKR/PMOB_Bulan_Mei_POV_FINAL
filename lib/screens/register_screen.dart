@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../utils/shared_styles.dart';
 import 'package:provider/provider.dart';
 import '../services/auth_provider.dart';
 import '../utils/snackbar_helper.dart';
@@ -74,154 +75,206 @@ class _RegisterScreenState extends State<RegisterScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: const Color(0xFFF5F7FA),
       body: SafeArea(
         child: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(horizontal: 24),
+          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 28),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              const SizedBox(height: 56),
-              const Text('Daftar Akun',
-                  style: TextStyle(
-                      fontSize: 28,
-                      fontWeight: FontWeight.w700,
-                      color: Color(0xFF1A1A1A))),
-              const SizedBox(height: 32),
-              Form(
-                key: _formKey,
+              Container(
+                padding: const EdgeInsets.symmetric(vertical: 26),
+                decoration: BoxDecoration(
+                  color: const Color(0xFF5C3317),
+                  borderRadius: BorderRadius.circular(22),
+                ),
+                child: Column(
+                  children: const [
+                    Icon(Icons.local_shipping_rounded,
+                        color: Colors.white, size: 42),
+                    SizedBox(height: 12),
+                    Text('Trackly',
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 26,
+                            fontWeight: FontWeight.w700)),
+                    SizedBox(height: 10),
+                    Text(
+                      'Buat akun untuk mulai melacak paketmu setiap saat.',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          color: Colors.white70, fontSize: 13, height: 1.5),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 24),
+              Container(
+                padding: const EdgeInsets.all(22),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(24),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withValues(alpha: 0.04),
+                      blurRadius: 14,
+                      offset: const Offset(0, 6),
+                    ),
+                  ],
+                ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    _buildLabel('Nama Lengkap'),
-                    const SizedBox(height: 6),
-                    _buildField(
-                      controller: _namaController,
-                      hint: 'Khansa Amani Rahmadni',
-                      validator: (v) =>
-                          (v == null || v.isEmpty) ? 'Nama wajib diisi' : null,
-                    ),
-                    const SizedBox(height: 16),
-                    _buildLabel('Email'),
-                    const SizedBox(height: 6),
-                    _buildField(
-                      controller: _emailController,
-                      hint: 'khansarahmadni20@gmail.com',
-                      keyboardType: TextInputType.emailAddress,
-                      validator: (v) {
-                        if (v == null || v.isEmpty) return 'Email wajib diisi';
-                        if (!v.contains('@')) return 'Format email tidak valid';
-                        return null;
-                      },
-                    ),
-                    const SizedBox(height: 16),
-                    _buildLabel('Alamat'),
-                    const SizedBox(height: 6),
-                    _buildField(
-                      controller: _alamatController,
-                      hint: 'Jl. Gunung Anyar Tambak Utara II',
-                      validator: (v) => (v == null || v.isEmpty)
-                          ? 'Alamat wajib diisi'
-                          : null,
-                    ),
-                    const SizedBox(height: 16),
-                    _buildLabel('Daftar Sebagai'),
-                    const SizedBox(height: 6),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: _RoleOption(
-                            label: 'Pengguna',
-                            value: 'customer',
-                            selectedValue: _selectedRole,
-                            onChanged: (value) => setState(() {
-                              _selectedRole = value;
-                            }),
+                    const Text('Daftar Akun',
+                        style: TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.w700,
+                            color: Color(0xFF1A1A1A))),
+                    const SizedBox(height: 24),
+                    Form(
+                      key: _formKey,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          _buildLabel('Nama Lengkap'),
+                          const SizedBox(height: 8),
+                          _buildField(
+                            controller: _namaController,
+                            hint: 'Masukkan nama lengkap',
+                            validator: (v) => (v == null || v.isEmpty)
+                                ? 'Nama wajib diisi'
+                                : null,
                           ),
-                        ),
-                        const SizedBox(width: 12),
-                        Expanded(
-                          child: _RoleOption(
-                            label: 'Kurir',
-                            value: 'courier',
-                            selectedValue: _selectedRole,
-                            onChanged: (value) => setState(() {
-                              _selectedRole = value;
-                            }),
+                          const SizedBox(height: 16),
+                          _buildLabel('Email'),
+                          const SizedBox(height: 8),
+                          _buildField(
+                            controller: _emailController,
+                            hint: 'Masukkan email aktif',
+                            keyboardType: TextInputType.emailAddress,
+                            validator: (v) {
+                              if (v == null || v.isEmpty)
+                                return 'Email wajib diisi';
+                              if (!v.contains('@'))
+                                return 'Format email tidak valid';
+                              return null;
+                            },
                           ),
-                        ),
-                        const SizedBox(width: 12),
-                        Expanded(
-                          child: _RoleOption(
-                            label: 'Staff',
-                            value: 'staff',
-                            selectedValue: _selectedRole,
-                            onChanged: (value) => setState(() {
-                              _selectedRole = value;
-                            }),
+                          const SizedBox(height: 16),
+                          _buildLabel('Alamat'),
+                          const SizedBox(height: 8),
+                          _buildField(
+                            controller: _alamatController,
+                            hint: 'Masukkan alamat lengkap',
+                            validator: (v) => (v == null || v.isEmpty)
+                                ? 'Alamat wajib diisi'
+                                : null,
                           ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 16),
-                    _buildLabel('Password'),
-                    const SizedBox(height: 6),
-                    _buildField(
-                      controller: _passwordController,
-                      hint: '••••••••••',
-                      obscure: _obscurePassword,
-                      onToggleObscure: () =>
-                          setState(() => _obscurePassword = !_obscurePassword),
-                      validator: (v) {
-                        if (v == null || v.isEmpty)
-                          return 'Password wajib diisi';
-                        if (v.length < 6) return 'Password minimal 6 karakter';
-                        return null;
-                      },
-                    ),
-                    const SizedBox(height: 16),
-                    _buildLabel('Konfirmasi Password'),
-                    const SizedBox(height: 6),
-                    _buildField(
-                      controller: _confirmPasswordController,
-                      hint: '••••••••••',
-                      obscure: _obscureConfirm,
-                      onToggleObscure: () =>
-                          setState(() => _obscureConfirm = !_obscureConfirm),
-                      validator: (v) {
-                        if (v == null || v.isEmpty)
-                          return 'Konfirmasi wajib diisi';
-                        if (v != _passwordController.text)
-                          return 'Password tidak cocok';
-                        return null;
-                      },
-                    ),
-                    const SizedBox(height: 28),
-                    SizedBox(
-                      width: double.infinity,
-                      height: 50,
-                      child: ElevatedButton(
-                        onPressed: _isLoading ? null : _handleRegister,
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(0xFF5C3317),
-                          disabledBackgroundColor: Colors.grey.shade300,
-                          elevation: 0,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8)),
-                        ),
-                        child: _isLoading
-                            ? const SizedBox(
-                                height: 20,
-                                width: 20,
-                                child: CircularProgressIndicator(
-                                    valueColor: AlwaysStoppedAnimation<Color>(
-                                        Colors.white),
-                                    strokeWidth: 2))
-                            : const Text('Daftar',
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w600)),
+                          const SizedBox(height: 16),
+                          _buildLabel('Daftar Sebagai'),
+                          const SizedBox(height: 8),
+                          Row(
+                            children: [
+                              Expanded(
+                                child: _RoleOption(
+                                  label: 'Pengguna',
+                                  value: 'customer',
+                                  selectedValue: _selectedRole,
+                                  onChanged: (value) => setState(() {
+                                    _selectedRole = value;
+                                  }),
+                                ),
+                              ),
+                              const SizedBox(width: 10),
+                              Expanded(
+                                child: _RoleOption(
+                                  label: 'Kurir',
+                                  value: 'courier',
+                                  selectedValue: _selectedRole,
+                                  onChanged: (value) => setState(() {
+                                    _selectedRole = value;
+                                  }),
+                                ),
+                              ),
+                              const SizedBox(width: 10),
+                              Expanded(
+                                child: _RoleOption(
+                                  label: 'Staff',
+                                  value: 'staff',
+                                  selectedValue: _selectedRole,
+                                  onChanged: (value) => setState(() {
+                                    _selectedRole = value;
+                                  }),
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 16),
+                          _buildLabel('Password'),
+                          const SizedBox(height: 8),
+                          _buildField(
+                            controller: _passwordController,
+                            hint: 'Buat password minimal 6 karakter',
+                            obscure: _obscurePassword,
+                            onToggleObscure: () => setState(
+                                () => _obscurePassword = !_obscurePassword),
+                            validator: (v) {
+                              if (v == null || v.isEmpty)
+                                return 'Password wajib diisi';
+                              if (v.length < 6)
+                                return 'Password minimal 6 karakter';
+                              return null;
+                            },
+                          ),
+                          const SizedBox(height: 16),
+                          _buildLabel('Konfirmasi Password'),
+                          const SizedBox(height: 8),
+                          _buildField(
+                            controller: _confirmPasswordController,
+                            hint: 'Ulangi password Anda',
+                            obscure: _obscureConfirm,
+                            onToggleObscure: () => setState(
+                                () => _obscureConfirm = !_obscureConfirm),
+                            validator: (v) {
+                              if (v == null || v.isEmpty)
+                                return 'Konfirmasi wajib diisi';
+                              if (v != _passwordController.text)
+                                return 'Password tidak cocok';
+                              return null;
+                            },
+                          ),
+                          const SizedBox(height: 28),
+                          SizedBox(
+                            width: double.infinity,
+                            height: AppStyles.buttonHeight,
+                            child: ElevatedButton(
+                              onPressed: _isLoading ? null : _handleRegister,
+                              style: AppStyles.primaryButtonStyle().copyWith(
+                                backgroundColor:
+                                    WidgetStateProperty.resolveWith((states) =>
+                                        states.contains(WidgetState.disabled)
+                                            ? Colors.grey.shade300
+                                            : const Color(0xFF5C3317)),
+                                elevation: WidgetStateProperty.all(0),
+                              ),
+                              child: _isLoading
+                                  ? const SizedBox(
+                                      height: 20,
+                                      width: 20,
+                                      child: CircularProgressIndicator(
+                                          valueColor:
+                                              AlwaysStoppedAnimation<Color>(
+                                                  Colors.white),
+                                          strokeWidth: 2),
+                                    )
+                                  : const Text('Daftar',
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w600)),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ],
@@ -233,11 +286,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   Expanded(
                       child:
                           Divider(color: Colors.grey.shade300, thickness: 1)),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 12),
+                  const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 12),
                     child: Text('atau daftar dengan',
-                        style: TextStyle(
-                            color: Colors.grey.shade500, fontSize: 12)),
+                        style: TextStyle(color: Colors.grey, fontSize: 12)),
                   ),
                   Expanded(
                       child:
@@ -373,7 +425,7 @@ class _RoleOption extends StatelessWidget {
           boxShadow: selected
               ? [
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.06),
+                    color: Colors.black.withValues(alpha: 0.06),
                     blurRadius: 8,
                     offset: const Offset(0, 2),
                   ),

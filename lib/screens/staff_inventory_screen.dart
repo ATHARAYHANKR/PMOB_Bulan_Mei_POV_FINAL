@@ -49,7 +49,7 @@ class _StaffInventoryScreenState extends State<StaffInventoryScreen> {
                   borderRadius: BorderRadius.circular(16),
                   boxShadow: [
                     BoxShadow(
-                        color: Colors.black.withOpacity(0.05),
+                        color: Colors.black.withValues(alpha: 0.05),
                         blurRadius: 10,
                         offset: const Offset(0, 4)),
                   ],
@@ -62,7 +62,7 @@ class _StaffInventoryScreenState extends State<StaffInventoryScreen> {
                       decoration: BoxDecoration(
                         color: item.stok < 50
                             ? Colors.red.shade50
-                            : const Color(0xFF5C3317).withOpacity(0.12),
+                            : const Color(0xFF5C3317).withValues(alpha: 0.12),
                         borderRadius: BorderRadius.circular(14),
                       ),
                       child: Icon(Icons.inventory_2_rounded,

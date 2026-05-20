@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'paket_saya_screen.dart';
-import 'search_screen.dart';
+import '../utils/shared_styles.dart';
 
 class HasilPencarianScreen extends StatelessWidget {
   final String nomorResi;
@@ -92,7 +92,8 @@ class HasilPencarianScreen extends StatelessWidget {
                         width: 36,
                         height: 36,
                         decoration: BoxDecoration(
-                          color: const Color(0xFFFF6B00).withValues(alpha: 0.15),
+                          color:
+                              const Color(0xFFFF6B00).withValues(alpha: 0.15),
                           borderRadius: BorderRadius.circular(8),
                         ),
                         child: const Icon(Icons.local_shipping_rounded,
@@ -110,12 +111,12 @@ class HasilPencarianScreen extends StatelessWidget {
                                     color: Color(0xFF2C3E50))),
                             Text(_estimasi,
                                 style: TextStyle(
-                                    fontSize: 12,
-                                    color: Colors.grey.shade500)),
+                                    fontSize: 12, color: Colors.grey.shade500)),
                           ],
                         ),
                       ),
-                      const Icon(Icons.chevron_right_rounded, color: Colors.grey),
+                      const Icon(Icons.chevron_right_rounded,
+                          color: Colors.grey),
                     ],
                   ),
 
@@ -191,13 +192,10 @@ class HasilPencarianScreen extends StatelessWidget {
                     width: double.infinity,
                     child: ElevatedButton(
                       onPressed: () => _showSimpanDialog(context),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xFF5C3317),
-                        padding: const EdgeInsets.symmetric(vertical: 12),
-                        elevation: 0,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10)),
-                      ),
+                      style: AppStyles.primaryButtonStyle().copyWith(
+                          backgroundColor:
+                              WidgetStateProperty.all(const Color(0xFF5C3317)),
+                          elevation: WidgetStateProperty.all(0)),
                       child: const Text('Simpan',
                           style: TextStyle(
                               color: Colors.white,
@@ -242,28 +240,23 @@ class HasilPencarianScreen extends StatelessWidget {
               const SizedBox(height: 8),
               Text('Paket telah ditambahkan\nke Paket Saya',
                   textAlign: TextAlign.center,
-                  style:
-                      TextStyle(fontSize: 13, color: Colors.grey.shade600)),
+                  style: TextStyle(fontSize: 13, color: Colors.grey.shade600)),
               const SizedBox(height: 20),
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
                   onPressed: () {
                     Navigator.pop(context);
-                    Navigator.pushAndRemoveUntil(
+                    Navigator.push(
                       context,
                       MaterialPageRoute(
                           builder: (_) => const PaketSayaScreen()),
-                      (route) => route.isFirst,
                     );
                   },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFF5C3317),
-                    padding: const EdgeInsets.symmetric(vertical: 12),
-                    elevation: 0,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10)),
-                  ),
+                  style: AppStyles.primaryButtonStyle().copyWith(
+                      backgroundColor:
+                          WidgetStateProperty.all(const Color(0xFF5C3317)),
+                      elevation: WidgetStateProperty.all(0)),
                   child: const Text('Lihat di Paket Saya',
                       style: TextStyle(
                           color: Colors.white, fontWeight: FontWeight.w600)),
@@ -275,15 +268,9 @@ class HasilPencarianScreen extends StatelessWidget {
                 child: OutlinedButton(
                   onPressed: () {
                     Navigator.pop(context);
-                    Navigator.pushReplacement(context,
-                        MaterialPageRoute(builder: (_) => const SearchScreen()));
+                    Navigator.pop(context);
                   },
-                  style: OutlinedButton.styleFrom(
-                    side: const BorderSide(color: Color(0xFF5C3317)),
-                    padding: const EdgeInsets.symmetric(vertical: 12),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10)),
-                  ),
+                  style: AppStyles.outlinedButtonStyle(),
                   child: const Text('Cari Resi Lain',
                       style: TextStyle(
                           color: Color(0xFF5C3317),

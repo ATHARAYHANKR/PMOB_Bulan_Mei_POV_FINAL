@@ -29,7 +29,7 @@ class _StaffMainScreenState extends State<StaffMainScreen> {
         decoration: BoxDecoration(
           boxShadow: [
             BoxShadow(
-                color: Colors.black.withOpacity(0.1),
+                color: Colors.black.withValues(alpha: 0.1),
                 blurRadius: 12,
                 offset: const Offset(0, -4)),
           ],
@@ -39,7 +39,7 @@ class _StaffMainScreenState extends State<StaffMainScreen> {
           onDestinationSelected: (index) =>
               setState(() => _currentIndex = index),
           backgroundColor: Colors.white,
-          indicatorColor: const Color(0xFF5C3317).withOpacity(0.12),
+          indicatorColor: const Color(0xFF5C3317).withValues(alpha: 0.12),
           destinations: const [
             NavigationDestination(
               icon: Icon(Icons.dashboard_outlined),
